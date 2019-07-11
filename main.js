@@ -51,3 +51,22 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+const dgram = require('dgram');
+const server = dgram.createSocket('udp4');
+
+server.on('error', (err) => {
+  console.log(`server error:\n${err.stack}`);
+  server.close();
+});
+
+server.on('message', (msg, rinfo) => {
+  console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+});
+
+server.on('listening', () => {
+  const address = server.address();
+  console.log(`server listening ${address.address}:${address.port}`);
+});
+
+server.bind(9100);
