@@ -1,6 +1,25 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
+const execa = require("execa");
+
+// Parcel bundler
+function runParcel() {
+  return new Promise(resolve => {
+    let output = "";
+    const parcelProcess = execa("parcel", ["index.html"]);
+    const concat = chunk => {
+      output += chunk;
+      console.log(output);
+      if (output.includes("Built in ")) {
+        parcelProcess.stdout.removeListener("data", concat);
+        console.log(output);
+        resolve();
+      }
+    };
+    parcelProcess.stdout.on("data", concat);
+  });
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,7 +36,11 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  //mainWindow.loadFile('index.html')
+
+  // load app bundled by parcel
+  runParcel();
+  mainWindow.loadURL(`http://localhost:1234`);
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
