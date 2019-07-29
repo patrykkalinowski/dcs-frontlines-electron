@@ -25,7 +25,7 @@ function runParcel() {
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+async function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -39,7 +39,7 @@ function createWindow () {
   //mainWindow.loadFile('index.html')
 
   // load app bundled by parcel
-  runParcel();
+  await runParcel();
   mainWindow.loadURL(`http://localhost:1234`);
 
   // Open the DevTools.
