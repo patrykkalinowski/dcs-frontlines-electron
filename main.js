@@ -75,6 +75,9 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+const DCS = require('./app/dcs')
+
+// Start UDP server to receive data from DCS
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
 
@@ -84,7 +87,8 @@ server.on('error', (err) => {
 });
 
 server.on('message', (msg, rinfo) => {
-  console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  // console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  DCS.receiveData(msg);
 });
 
 server.on('listening', () => {
