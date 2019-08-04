@@ -1,5 +1,5 @@
 const mgrs = require('mgrs')
-// var map = require('./map')
+const map = require('./map')
 
 module.exports = {
     receiveData: function(data) {
@@ -10,8 +10,10 @@ module.exports = {
             var mgrs_string = data[key].mgrs_position.UTMZone + data[key].mgrs_position.MGRSDigraph + data[key].mgrs_position.Easting + data[key].mgrs_position.Northing
             
             var coords = mgrs.toPoint(mgrs_string)
-            // map.addFeature(coords)
+            map.addFeature(coords)
 
         }
     }
 }
+
+map.addFeature([0,0]) // testing

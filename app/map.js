@@ -1,8 +1,10 @@
-// module.exports = {
-//     addFeature: function(coords) {
-//         unitsSource.addFeature(new Feature(new Circle(coords, 1e6)))
-//     }
-// }
+module.exports = {
+    addUnit: function(coords) {
+        unitsSource.addFeature(new Feature(new Circle(coords, 1e6)))
+    }
+}
+
+import { Buffer } from "buffer"; // needed after 'fs' is being transpiled
 
 const fs = require ('fs');
 
